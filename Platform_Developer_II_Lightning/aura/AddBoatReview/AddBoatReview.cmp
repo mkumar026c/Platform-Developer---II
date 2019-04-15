@@ -1,0 +1,41 @@
+<aura:component implements="flexipage:availableForAllPageTypes" >
+    <!-- Public Attributes -->
+    <aura:attribute type="Boat__c" name="boat" access="public"/>
+    
+    <aura:attribute type="string[]" name="fieldsToQuery" 
+                    default="['Id', 'Name', 'Comment__c', 'Boat__c', 'Rating__c']" />
+    
+    <!-- Private Attributes -->
+    <aura:attribute name="recordError" type="String" access="private"/>
+    <aura:attribute type="BoatReview__c" name="boatReview" access="private"/>
+    
+    <!-- LDS To Create Boat Review Record -->
+    <force:recordData aura:id="service" mode="EDIT" fields="{!v.fieldsToQuery}"
+                      targetFields="{!v.boatReview}" recordUpdated="{!c.onrecordUpdated}"
+                      targetError="{!v.recordError}"/>
+    
+    <!-- Init Handler -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <!-- Register Event -->
+    <aura:registerEvent name="BoatReviewAdded" type="c:BoatReviewAdded" />
+    
+    <!-- Main Body of Lightning Component -->
+    <lightning:layout verticalAlign="stretch" multipleRows="true" class="x-large">
+        <lightning:layoutItem flexibility="auto" padding="around-small" class="custom-box">
+            <div class="slds-p-horizontal--small">
+                <lightning:input name="title" label="Title:" value="{!v.boatReview.Name}"/>
+                <lightning:inputRichText value="{!v.boatReview.Comment__c}" placeholder="Comment" 
+                                         label="Description:" disabledCategories="FORMAT_FONT"
+                                         labelVisible="true"/>
+                Rating:<br/><c:FiveStarRating value="{!v.boatReview.Rating__c}" />
+            </div>
+        </lightning:layoutItem>
+    </lightning:layout>
+    
+    <lightning:layout horizontalAlign="center">
+        <lightning:layoutItem padding="around-small">
+            <lightning:button label="Submit" iconName="utility:save" onclick="{!c.onSave}"/>
+        </lightning:layoutItem>
+    </lightning:layout>
+</aura:component>

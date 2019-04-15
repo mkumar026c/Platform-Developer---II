@@ -1,0 +1,6 @@
+.THIS .fontWeightBold{
+	font-weight: bold;
+}
+.THIS .slds-form-element__label{
+    display: none;
+}

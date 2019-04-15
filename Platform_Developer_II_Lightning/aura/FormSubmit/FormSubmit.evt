@@ -1,0 +1,3 @@
+<aura:event type="COMPONENT" description="Event to Send Boat Data">
+    <aura:attribute type="object" name="formData"/>
+</aura:event>
