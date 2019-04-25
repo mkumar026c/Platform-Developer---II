@@ -1,0 +1,17 @@
+<aura:component >
+    <!-- Attributes -->
+    <aura:attribute type="Integer" name="value" default="0" />
+    <aura:attribute type="boolean" name="readonly" default="false" />
+    
+    <!-- Load the static resource -->
+    <ltng:require styles="{!$Resource.fivestar + '/rating.css'}" 
+                  scripts="{!$Resource.fivestar + '/rating.js'}" 
+                  afterScriptsLoaded="{!c.afterScriptsLoaded}" />
+    
+    <!-- Aura Handlers -->
+    <aura:handler name="change" value="{!v.value}" action="{!c.onValueChange}" />
+    
+    <ul aura:id="ratingarea" class="{!v.readonly ? 'readonly c-rating' : 'c-rating'}">
+    	
+    </ul>
+</aura:component>

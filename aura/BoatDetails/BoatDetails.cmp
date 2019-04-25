@@ -1,0 +1,28 @@
+<aura:component implements="flexipage:availableForAllPageTypes">
+    <aura:handler event="c:BoatSelected" action="{!c.onBoatSelected}"/>
+    <aura:attribute type="String[]" name="fieldsToQuery" 
+                    default="['Id', 'Name', 'Description__c', 'Price__c', 'Length__c', 
+                             'Contact__r.Name', 'Contact__r.Email', 'Contact__r.HomePhone',
+                             'BoatType__r.Name', 'Picture__c']" />
+    <aura:attribute type="Boat__c" name="boat"/>
+    <aura:attribute type="Id" name="id"/>
+    <aura:attribute name="selectedTabId" type="String" />
+    <force:recordData aura:id="service" recordId="{!v.id}" fields="{!v.fieldsToQuery}"
+                      mode="VIEW" targetFields="{!v.boat}"
+                      recordUpdated="{!c.onrecordUpdated}"/>
+    <aura:handler name="BoatReviewAdded" event="c:BoatReviewAdded" action="{!c.onBoatReviewAdded}" />
+    
+    <lightning:tabset aura:id="tabset" selectedTabId="{!v.selectedTabId}">
+        <lightning:tab label="DETAILS">
+            <aura:if isTrue="{! v.boat != undefined}">
+                <c:BoatDetail boat="{!v.boat}" />
+            </aura:if>
+        </lightning:tab>
+        <lightning:tab label="REVIEWS" id="boatReviewTab">
+            <c:BoatReviews boat="{!v.boat}" aura:id="BoatReviews"/>
+        </lightning:tab>
+        <lightning:tab label="ADD REVIEW">
+            <c:AddBoatReview boat="{!v.boat}" />
+        </lightning:tab>
+    </lightning:tabset>
+</aura:component>

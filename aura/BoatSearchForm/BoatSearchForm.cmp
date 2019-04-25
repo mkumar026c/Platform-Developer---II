@@ -1,0 +1,33 @@
+<aura:component controller="BoatSearchResults">
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+    <aura:attribute type="BoatType__c[]" name="boatTypes" />
+    <aura:attribute type="boolean" name="createRecordSupported" />
+    <aura:attribute type="String" name="selBoatTypeId" default=""/>
+    <aura:registerEvent name="FormSubmit" type="c:FormSubmit" />
+    
+    <article class="slds-card">
+        <div class="slds-card__body slds-card__body_inner">
+            <lightning:layout horizontalAlign="center">
+                <lightning:layoutItem padding="around-small">
+                    <lightning:select aura:id="selectBoat" name="select" label="" 
+                                      onchange="{!c.handleBoatChange}">
+                        <option value="">All Types</option>
+                        <aura:iteration items="{!v.boatTypes}" var="boatType">
+                            <option value="{!boatType.Id}">{!boatType.Name}</option>
+                        </aura:iteration>
+                    </lightning:select>
+                </lightning:layoutItem>
+                <lightning:layoutItem padding="around-small">
+                    <lightning:button variant="brand" label="Search" title="Search" 
+                                      onclick="{!c.onFormSubmit}"/>
+                </lightning:layoutItem>
+                <lightning:layoutItem padding="around-small">
+                    <aura:if isTrue="{!v.createRecordSupported}">
+                        <lightning:button variant="Neutral" label="New" title="New" 
+                                          onclick="{!c.createNew}" />
+                    </aura:if>
+                </lightning:layoutItem>
+            </lightning:layout>
+        </div>
+    </article>
+</aura:component>
